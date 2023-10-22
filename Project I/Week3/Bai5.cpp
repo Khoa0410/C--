@@ -114,7 +114,7 @@ void PostOrder(Node* r)
 
 int main()
 {
-    //freopen(".inp", "r", stdin);
+    freopen(".inp", "r", stdin);
     while(true)
     {
         string s;
