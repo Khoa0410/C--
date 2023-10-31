@@ -6,27 +6,18 @@ Given a sequence of strings k1, k2, …, kn, compute the corresponding hash code
 #include<bits/stdc++.h>
 using namespace std;
 
-// Hàm chia lấy dư của a mũ b chia cho m
-int modulo(int a, int b, int m)
-{
-    int res = 1;
-    while (b > 0) {
-        if (b % 2 == 1) {
-            res = (1LL * res * a) % m;
-        }
-        a = (1LL * a * a) % m;
-        b /= 2;
-    }
-    return res;
-}
+int n, m;
+int modun[200]; // modun[i] = 256^i % m
 
-int hash_code(string s, int m)
+int hash_code(string s)
 {
-    long long tmp = 0;
-    for(int i = 0; i < s.size(); i++)
+    int tmp = 0;
+    int h = s.size();
+
+    for(int i = 0; i < h; i++)
     {
-        tmp = tmp + 1LL * s[i] * modulo(256, s.size() - i - 1, m);
-        tmp = tmp % m;
+        tmp += s[i] * modun[h - i - 1];
+        tmp %= m;
     }
     return tmp;
 }
@@ -35,14 +26,22 @@ int main()
 {
     //freopen(".inp", "r", stdin);
     
-    int n, m;
     cin >> n >> m;
 
+    // Tính giá trị cho mảng modun[]
+    modun[0] = 1;
+    for(int i = 1; i < 200; i++)
+    {
+        modun[i] = modun[i - 1] * 256;
+        modun[i] = modun[i] % m;
+    }
+
+    // Nhập các xâu và tính hash code
     for(int i = 0; i < n; i++)
     {
         string s;
         cin >> s;
-        cout << hash_code(s, m) << endl;
+        cout << hash_code(s) << "\n";
     }
 
     return 0;
