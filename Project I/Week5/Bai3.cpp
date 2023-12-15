@@ -27,7 +27,7 @@ void input()
         sort(G[i].begin(), G[i].end());
 }
 
-// Duyệt đồ thị theo chiều sâu
+// Duyệt đồ thị theo chiều rộng
 vector<int> bfs(const vector<vector<int>> &G)
 {
     int V = G.size();               // Số đỉnh của đồ thị

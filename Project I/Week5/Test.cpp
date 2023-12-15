@@ -1,76 +1,66 @@
-#include <iostream>
-#include <vector>
-#include <algorithm> // Hàm sort
+/*Given a directed graph G = (V,E) in which V = {1,2,...,n) is the set of nodes.
+Each arc (u,v) has a non-negative weight w(u,v).
+Given two nodes s and t of G. Find the shortest path from s to t on G.*/
+
+#include<bits/stdc++.h>
 using namespace std;
 
-// Cấu trúc để lưu cạnh đồ thị,
-// u, v là 2 đỉnh, w là trọng số cạnh
-struct edge {
-    int u, v, w;
-};
-// Hàm so sánh để dùng trong hàm sort ở dưới
-bool cmp(const edge &a, const edge &b) {
-    return a.w < b.w;
-}
+#define N 100005
 
-// Số đỉnh tối đa trong đề bài
-#define N 10005
+int n, m;
+int sum;
+int G[N][N] = {};
+vector<bool>  visited;
+vector<int> SUM;
 
-// 2 mảng sử dụng trong Disjoint Set
-int cha[N], hang[N];
+void input()
+{
+    cin >> n >> m;
+    sum = 0;
+    visited.resize(n + 1, false);
 
-// Tìm xem u thuộc cây nào
-int find(int u) {
-    if (cha[u] != u) cha[u] = find(cha[u]);
-    return cha[u];
-}
-
-// Hợp nhất 2 cây chứ u và v,
-// Trả về false nếu không thể hợp nhất
-bool join(int u, int v) {
-    u = find(u); v = find(v);
-    if (u == v) return false;
-    if (hang[u] == hang[v]) hang[u]++;
-    if (hang[u] < hang[v]) cha[u] = v;
-    else cha[v]=u;
-    return true;
-}
-
-int main() {
-    freopen(".inp", "r", stdin);
-    
-    // Thêm dòng này để cin, cout chạy nhanh
-    ios::sync_with_stdio(false); cin.tie(0);
-
-    // Nhập vào số đỉnh và số cạnh
-    int n, m; cin >> n >> m;
-
-    // Nhập danh sách các cạnh
-    vector<edge> edges(m);
-    for (edge &e: edges) cin >> e.u >> e.v >> e.w;
-
-    // Sắp xếp lại các cạnh theo trọng số tăng dần
-    sort(edges.begin(), edges.end(), cmp);
-
-    // Khởi tạo cấu trúc Disjoint Set
-    for (int i=1; i<=n; i++) {
-        cha[i] = i;
-        hang[i] = 0;
+    for(int i = 0; i < m; i++)
+    {
+        int tmp1, tmp2, w;
+        cin >> tmp1 >> tmp2 >> w;
+        G[tmp1][tmp2] = w;
     }
+}
 
-    // Lưu tổng trọng số các cạnh trong cây khung nhỏ nhất
-    int mst_weight = 0;
+// Tìm tổng trọng số đường đi từ đỉnh s đến đỉnh t
+void find_way(int s, int t)
+{
+    if(s == t)  return;
 
-    // Duyệt qua các cạnh theo thứ tự đã sắp xếp
-    for (edge &e: edges) {
-        // Thử hợp nhất 2 cây chứa u và v
-        if (join(e.u, e.v)) {
-            // Hợp nhất thành công, ta thêm e và kết quả
-            mst_weight += e.w;
+    if(!visited[s])
+    {
+        visited[s] = true;
+        for(int i = 1; i <= n; i++)
+        {
+            if(G[s][i])
+            {
+                sum += G[s][i];
+                find_way(i, t);
+                SUM.push_back(sum);
+
+                // Thực hiện quay lui
+                sum -= G[s][i];
+            }
         }
     }
+}
 
-    // Xuất kết quả
-    cout << mst_weight;
+int main()
+{
+    freopen(".inp", "r", stdin);
+
+    input();
+
+    int s, t;
+    cin >> s >> t;
+    find_way(s, t);
+    sort(SUM.begin(), SUM.end());
+    cout << SUM.front();
+
     return 0;
 }

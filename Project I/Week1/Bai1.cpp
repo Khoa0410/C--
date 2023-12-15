@@ -1,7 +1,7 @@
 #include <bits/stdc++.h> 
 using namespace std;
 int main() 
-{ 
+{
     int n, sum = 0;
     cin >> n;
     int a[n];
@@ -10,6 +10,7 @@ int main()
         cin >> a[i];
         sum += a[i];
     }
+    cout << n << endl;
     cout << sum;
     return 0;
 }
