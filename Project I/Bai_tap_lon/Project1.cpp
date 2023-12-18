@@ -162,7 +162,7 @@ void Merge_Sort(int A[], int N)
 
     // Sao chép dãy A[N] vào b[N]
     int b[N];
-    for (int i = 0; i <N; i++)
+    for (int i = 0; i < N; i++)
         b[i] = A[i];
     MergeSort(b, 0, N - 1);
     wcout << L"Dãy sắp xếp theo Merge Sort: ";
@@ -182,9 +182,9 @@ int index_pivot(int A[], int L, int R, int index_pre_pivot)
     int index = L;
 
     // Xếp các phần tử nhỏ hơn phần tử trụ lên đầu mảng
-    for(int i = L; i < R; i++)
+    for (int i = L; i < R; i++)
     {
-        if(A[i] < pre_pivot)
+        if (A[i] < pre_pivot)
         {
             swap(A[i], A[index]);
             index++;
@@ -198,7 +198,7 @@ int index_pivot(int A[], int L, int R, int index_pre_pivot)
 // Hàm đệ quy thực hiện sắp xếp QuickSort
 void QuickSort(int A[], int L, int R)
 {
-    if(L < R)
+    if (L < R)
     {
         int M = L + (R - L) / 2;
         M = index_pivot(A, L, R, M);
@@ -224,12 +224,60 @@ void Quick_Sort(int A[], int N)
     wcout << L"Thời gian thực hiện: " << duration.count() << " microseconds\n";
 }
 
+// Hàm vun lại đống cho phần tử thứ i
+void heapify(int A[], int i, int N)
+{
+    int L = 2 * i;
+    int R = 2 * i + 1;
+    int max = i;
+    if (L <= N && A[L] > A[i])
+        max = L;
+    if (R <= N && A[R] > A[max])
+        max = R;
+    if (max != i)
+    {
+        swap(A[i], A[max]);
+        heapify(A, max, N);
+    }
+}
+
+// Xây dựng max heap
+void buildHeap(int A[], int N)
+{
+    for (int i = N / 2; i >= 1; i--)
+        heapify(A, i, N);
+}
+
+void Heap_Sort(int A[], int N)
+{
+    // Thời điểm bắt đầu thuật toán
+    auto start = chrono::high_resolution_clock::now();
+
+    // Sao chép dãy A[N] vào b[N + 1]
+    int b[N + 1];
+    for (int i = 0; i < N; i++)
+        b[i + 1] = A[i];
+
+    buildHeap(b, N);
+    for (int i = N; i > 1; i--)
+    {
+        swap(b[1], b[i]);
+        heapify(b, 1, i - 1);
+    }
+
+    wcout << L"Dãy sắp xếp theo Heap Sort: ";
+    print(b, 1, N);
+    auto end = chrono::high_resolution_clock::now(); // Thời điểm kết thúc thuật toán
+    auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+    wcout << L"Thời gian thực hiện: " << duration.count() << " microseconds\n";
+}
+
 int main()
 {
     // Thiết lập chế độ unicode cho luồng nhập và xuất
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
-    
+
     int N; // Số phần tử của mảng
     wcout << L"Nhập số phần tử cho mảng: ";
     wcin >> N;
@@ -281,8 +329,12 @@ int main()
         case 5:
             Quick_Sort(A, N);
             break;
+
+        case 6:
+            Heap_Sort(A, N);
+            break;
         }
     }
-    
+
     return 0;
 }
