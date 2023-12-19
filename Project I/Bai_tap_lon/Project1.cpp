@@ -278,6 +278,7 @@ int main()
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
 
+    //ifstream file(".inp"); // file dữ liệu đầu vào
     int N; // Số phần tử của mảng
     wcout << L"Nhập số phần tử cho mảng: ";
     wcin >> N;
