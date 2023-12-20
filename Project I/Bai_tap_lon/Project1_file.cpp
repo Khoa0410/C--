@@ -2,9 +2,6 @@
 // Đề tài: Lập trình ứng dụng thực hiện các thuật toán sắp xếp
 
 #include <bits/stdc++.h>
-#include <fcntl.h>
-#include <locale>
-#include <codecvt>
 using namespace std;
 
 wofstream output;
