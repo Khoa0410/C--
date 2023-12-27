@@ -2,9 +2,13 @@
 // Đề tài: Lập trình ứng dụng thực hiện các thuật toán sắp xếp
 
 #include <bits/stdc++.h>
+#include <fcntl.h>
 using namespace std;
 
 wofstream output;
+
+int N;
+int A[100000];
 
 void print(int a[], int l, int r)
 {
@@ -275,22 +279,25 @@ void Heap_Sort(int A[], int N)
 
 int main()
 {
+    // Thiết lập chế độ unicode cho luồng nhập và xuất
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
     ifstream file(".inp"); // Đọc dữ liệu đầu vào từ file .inp
     output.open(".out"); // Ghi dữ liệu kết quả ra file .out
     output.imbue(locale(locale(), new codecvt_utf8<wchar_t>));
-    int N; // Số phần tử của mảng
+    /*int N; // Số phần tử của mảng
     file >> N;
     int A[N];  // Mảng cần sắp xếp
     int selec; // Lựa chọn của người dùng
     for (int i = 0; i < N; i++)
-        file >> A[i];
-
+        file >> A[i];*/
+    int selec;
     while (file >> selec)
     {
         switch (selec)
         {
         case 0:
-            output << L"Bạn đã lựa chọn thoát chương trình";
+            wcout << L"Bạn đã lựa chọn thoát chương trình";
             this_thread::sleep_for(5s);
             return 0;
             break;
@@ -317,6 +324,12 @@ int main()
         
         case 6:
             Heap_Sort(A, N);
+            break;
+
+        case 7:
+            file >> N;
+            for (int i = 0; i < N; i++)
+                file >> A[i];
             break;
         }
     }

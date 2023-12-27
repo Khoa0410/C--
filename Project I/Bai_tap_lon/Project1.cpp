@@ -294,6 +294,7 @@ int main()
     wcout << "4.Merge Sort." << '\n';
     wcout << "5.Quick Sort." << '\n';
     wcout << "6.Heap Sort." << '\n';
+    wcout << L"7.Nhập dữ liệu cho mảng cần sắp xếp" << '\n';
     wcout << L"0.Thoát" << '\n';
     wcout << "----------------" << '\n';
 
@@ -332,6 +333,14 @@ int main()
 
         case 6:
             Heap_Sort(A, N);
+            break;
+
+        case 7:
+            wcout << L"Nhập số phần tử cho mảng: ";
+            wcin >> N;
+            wcout << L"Nhập các giá trị cho mảng: ";
+            for (int i = 0; i < N; i++)
+                wcin >> A[i];
             break;
         }
     }
