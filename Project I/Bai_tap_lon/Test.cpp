@@ -46,9 +46,6 @@ void Selection_Sort(int a[], int n)
         swap(b[min], b[i]);
     }
 
-    // wcout << L"Dãy sắp xếp theo Selection Sort: ";
-    // print(b, 0, n - 1);
-
     auto end = chrono::high_resolution_clock::now(); // Thời điểm kết thúc thuật toán
     auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
     wcout << L"Thời gian thực hiện theo Selection Sort: " << duration.count() << " microseconds\n";
@@ -76,9 +73,6 @@ void Insertion_Sort(int a[], int n)
         }
         b[j] = last;
     }
-
-    // wcout << L"Dãy sắp xếp theo Insertion Sort: ";
-    // print(b, 0, n - 1);
 
     auto end = chrono::high_resolution_clock::now(); // Thời điểm kết thúc thuật toán
     auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
@@ -110,9 +104,6 @@ void Bubble_Sort(int a[], int n)
             }
         }
     }
-
-    // wcout << L"Dãy sắp xếp theo Bubble Sort: ";
-    // print(b, 0, n - 1);
 
     auto end = chrono::high_resolution_clock::now(); // Thời điểm kết thúc thuật toán
     auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
@@ -180,9 +171,6 @@ void Merge_Sort(int A[], int N)
 
     MergeSort(b, 0, N - 1);
 
-    // wcout << L"Dãy sắp xếp theo Merge Sort: ";
-    // print(b, 0, N - 1);
-
     auto end = chrono::high_resolution_clock::now(); // Thời điểm kết thúc thuật toán
     auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
     wcout << L"Thời gian thực hiện theo Merge Sort: " << duration.count() << " microseconds\n";
@@ -235,9 +223,6 @@ void Quick_Sort(int A[], int N)
 
     QuickSort(b, 0, N - 1);
 
-    // wcout << L"Dãy sắp xếp theo Quick Sort: ";
-    // print(b, 0, N - 1);
-
     auto end = chrono::high_resolution_clock::now(); // Thời điểm kết thúc thuật toán
     auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
     wcout << L"Thời gian thực hiện theo Quick Sort: " << duration.count() << " microseconds\n";
@@ -284,9 +269,6 @@ void Heap_Sort(int A[], int N)
         heapify(b, 1, i - 1);
     }
 
-    // wcout << L"Dãy sắp xếp theo Heap Sort: ";
-    // print(b, 1, N);
-
     auto end = chrono::high_resolution_clock::now(); // Thời điểm kết thúc thuật toán
     auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
     wcout << L"Thời gian thực hiện theo Heap Sort: " << duration.count() << " microseconds\n";
@@ -300,8 +282,11 @@ int main()
     ifstream file(".inp"); // Đọc dữ liệu đầu vào từ file .inp
     output.open(".out");   // Ghi dữ liệu kết quả ra file .out
     output.imbue(locale(locale(), new codecvt_utf8<wchar_t>));
+    int count = 0; // Số lượng dãy số được sắp xếp
     wcout << L"0.Nhập dữ liệu bằng bàn phím" << '\n';
     wcout << L"1.Nhập dữ liệu bằng file" << '\n';
+    wcout << "----------------" << '\n';
+    wcout << L"Mời nhập lựa chọn của bạn: ";
     wcin >> a;
     
     if (!a)
@@ -360,6 +345,7 @@ int main()
             break;
 
         case 7:
+            count ++;
             if (!a)
             {
                 wcout << L"Nhập số phần tử cho mảng: ";
@@ -386,10 +372,10 @@ int main()
                 heapify(b, 1, i - 1);
             }
 
-            if (!a)
-                wcout << L"Dãy đã sắp xếp: ";
+            if (!a)     wcout << L"Dãy đã được sắp xếp: ";
             print(b, 1, N);
             delete[] b;
+            if(a)       wcout << L"Thời gian thực hiện dãy thứ " << count << ": " << "\n";
             break;
         }
     }

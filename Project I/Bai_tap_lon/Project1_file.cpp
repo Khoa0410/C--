@@ -282,8 +282,8 @@ int main()
     // Thiết lập chế độ unicode cho luồng nhập và xuất
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
-    ifstream file(".inp"); // Đọc dữ liệu đầu vào từ file .inp
-    output.open(".out"); // Ghi dữ liệu kết quả ra file .out
+    ifstream file("inp.txt"); // Đọc dữ liệu đầu vào từ file .inp
+    output.open("out.txt"); // Ghi dữ liệu kết quả ra file .out
     output.imbue(locale(locale(), new codecvt_utf8<wchar_t>));
     /*int N; // Số phần tử của mảng
     file >> N;
