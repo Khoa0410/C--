@@ -293,7 +293,7 @@ int main(int argc, char *argv[])
         }
         print(b, 1, N);
         delete[] b;
-        wcout << L"Thời gian thực hiện dãy thứ " << count << ' ';
+        if(selec != 0)  wcout << L"Thời gian thực hiện dãy thứ " << count << ' ';
 
         switch (selec)
         {
