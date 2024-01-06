@@ -297,12 +297,6 @@ int main(int argc, char *argv[])
 
         switch (selec)
         {
-        case 0:
-            wcout << L"Bạn đã lựa chọn thoát chương trình";
-            this_thread::sleep_for(5s);
-            return 0;
-            break;
-
         case 1:
             Selection_Sort(A, N);
             break;
