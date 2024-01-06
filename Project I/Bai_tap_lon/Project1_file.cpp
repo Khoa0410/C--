@@ -5,9 +5,9 @@
 #include <fcntl.h>
 using namespace std;
 
-int N; // 
-int selec;
-int A[100000];
+int N; //  Số phần tử của mảng
+int selec; // Lựa chọn thuật toán cần sắp xếp
+int A[100000]; // Mảng cần sắp xếp
 
 wofstream output;
 
