@@ -5,11 +5,17 @@
 #include <fcntl.h>
 using namespace std;
 
-void print(int a[], int l, int r)
+int N;
+int selec, a;
+int A[100000];
+
+wofstream output;
+
+void print(int arr[], int l, int r)
 {
     for (int i = l; i <= r; i++)
-        wcout << a[i] << ' ';
-    wcout << '\n';
+        output << arr[i] << ' ';
+    output << '\n';
 }
 
 void Selection_Sort(int a[], int n)
@@ -33,12 +39,9 @@ void Selection_Sort(int a[], int n)
         b[i] = tmp;
     }
 
-    wcout << L"Dãy sắp xếp theo Selection Sort: ";
-    print(b, 0, n - 1);
-
     auto end = chrono::high_resolution_clock::now(); // Thời điểm kết thúc thuật toán
     auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-    wcout << L"Thời gian thực hiện: " << duration.count() << " microseconds\n";
+    wcout << L"Thời gian thực hiện theo Selection Sort: " << duration.count() << " microseconds\n";
 }
 
 void Insertion_Sort(int a[], int n)
@@ -64,12 +67,9 @@ void Insertion_Sort(int a[], int n)
         b[j] = last;
     }
 
-    wcout << L"Dãy sắp xếp theo Insertion Sort: ";
-    print(b, 0, n - 1);
-
     auto end = chrono::high_resolution_clock::now(); // Thời điểm kết thúc thuật toán
     auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-    wcout << L"Thời gian thực hiện: " << duration.count() << " microseconds\n";
+    wcout << L"Thời gian thực hiện theo Insertion Sort: " << duration.count() << " microseconds\n";
 }
 
 void Bubble_Sort(int a[], int n)
@@ -98,12 +98,9 @@ void Bubble_Sort(int a[], int n)
         }
     }
 
-    wcout << L"Dãy sắp xếp theo Bubble Sort: ";
-    print(b, 0, n - 1);
-
     auto end = chrono::high_resolution_clock::now(); // Thời điểm kết thúc thuật toán
     auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-    wcout << L"Thời gian thực hiện: " << duration.count() << " microseconds\n";
+    wcout << L"Thời gian thực hiện theo Bubble Sort: " << duration.count() << " microseconds\n";
 }
 
 // Hàm gộp 2 mảng a[L...M] và a[M+1...R] đã sắp xếp theo MergeSort
@@ -165,11 +162,9 @@ void Merge_Sort(int A[], int N)
     for (int i = 0; i < N; i++)
         b[i] = A[i];
     MergeSort(b, 0, N - 1);
-    wcout << L"Dãy sắp xếp theo Merge Sort: ";
-    print(b, 0, N - 1);
     auto end = chrono::high_resolution_clock::now(); // Thời điểm kết thúc thuật toán
     auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-    wcout << L"Thời gian thực hiện: " << duration.count() << " microseconds\n";
+    wcout << L"Thời gian thực hiện theo Merge Sort: " << duration.count() << " microseconds\n";
 }
 
 /* Hàm thực hiện xếp các phần tử nhỏ hơn phần tử trụ(pivot) đứng trước phần tử trụ
@@ -217,11 +212,9 @@ void Quick_Sort(int A[], int N)
     for (int i = 0; i < N; i++)
         b[i] = A[i];
     QuickSort(b, 0, N - 1);
-    wcout << L"Dãy sắp xếp theo Quick Sort: ";
-    print(b, 0, N - 1);
     auto end = chrono::high_resolution_clock::now(); // Thời điểm kết thúc thuật toán
     auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-    wcout << L"Thời gian thực hiện: " << duration.count() << " microseconds\n";
+    wcout << L"Thời gian thực hiện theo Quick Sort: " << duration.count() << " microseconds\n";
 }
 
 // Hàm vun lại đống cho phần tử thứ i
@@ -265,42 +258,22 @@ void Heap_Sort(int A[], int N)
         heapify(b, 1, i - 1);
     }
 
-    wcout << L"Dãy sắp xếp theo Heap Sort: ";
-    print(b, 1, N);
     auto end = chrono::high_resolution_clock::now(); // Thời điểm kết thúc thuật toán
     auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-    wcout << L"Thời gian thực hiện: " << duration.count() << " microseconds\n";
+    wcout << L"Thời gian thực hiện theo Heap Sort: " << duration.count() << " microseconds\n";
 }
 
 int main()
 {
     // Thiết lập chế độ unicode cho luồng nhập và xuất
-    _setmode(_fileno(stdout), _O_U16TEXT);
-    _setmode(_fileno(stdin), _O_U16TEXT);
-
-    int N; // Số phần tử của mảng
-    wcout << L"Nhập số phần tử cho mảng: ";
-    wcin >> N;
-    int A[N];  // Mảng cần sắp xếp
-    int selec; // Lựa chọn của người dùng
-
-    wcout << L"Nhập các giá trị cho mảng: ";
-    for (int i = 0; i < N; i++)
-        wcin >> A[i];
-
-    wcout << "1.Selection Sort." << '\n';
-    wcout << "2.Insertion Sort." << '\n';
-    wcout << "3.Bubble Sort." << '\n';
-    wcout << "4.Merge Sort." << '\n';
-    wcout << "5.Quick Sort." << '\n';
-    wcout << "6.Heap Sort." << '\n';
-    wcout << L"7.Nhập dữ liệu cho mảng cần sắp xếp" << '\n';
-    wcout << L"0.Thoát" << '\n';
-    wcout << "----------------" << '\n';
+    _setmode(_fileno(stdout), _O_U8TEXT);
+    _setmode(_fileno(stdin), _O_U8TEXT);
+    output.open(".out");   // Ghi dữ liệu kết quả ra file .out
+    output.imbue(locale(locale(), new codecvt_utf8<wchar_t>));
+    int count = 0; // Số lượng dãy số được sắp xếp
 
     while (true)
     {
-        wcout << L"Mời nhập lựa chọn của bạn: ";
         wcin >> selec;
 
         switch (selec)
@@ -336,11 +309,25 @@ int main()
             break;
 
         case 7:
-            wcout << L"Nhập số phần tử cho mảng: ";
+            count++;
             wcin >> N;
-            wcout << L"Nhập các giá trị cho mảng: ";
             for (int i = 0; i < N; i++)
                 wcin >> A[i];
+
+            int *b = new int[N + 1];
+            for (int i = 0; i < N; i++)
+                b[i + 1] = A[i];
+
+            buildHeap(b, N);
+            for (int i = N; i > 1; i--)
+            {
+                swap(b[1], b[i]);
+                heapify(b, 1, i - 1);
+            }
+
+            print(b, 1, N);
+            delete[] b;
+            wcout << L"Thời gian thực hiện dãy thứ " << count << ": " << "\n";
             break;
         }
     }
